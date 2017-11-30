@@ -1,12 +1,38 @@
 ﻿@model TP07.Models.FacturaViewModel
 
-
 <form action="/FacturaDetallesModels/Create" method="post">
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <h4>Detalle de Factura</h4>
         <hr />
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.detalle.articuloid)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.detalle.cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.detalle.precio)
+                </th>
+            </tr>
+            @foreach (var item in Model.factura.detalles)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.articuloid)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cantidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.precio)
+                    </td>
+                </tr>
+            }
+        </table>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.factura.id)
         <div class="form-group">

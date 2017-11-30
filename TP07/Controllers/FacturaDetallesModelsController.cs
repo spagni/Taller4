@@ -26,19 +26,19 @@ namespace TP07.Controllers
         // GET: FacturaDetallesModels/Create
         public ActionResult Create()
         {
-            ViewBag.articuloid = new SelectList(db.ArticulosModels, "id", "codigo");
-            ViewBag.facturaid = new SelectList(db.FacturasModels, "id", "id");
+            //Mostrar los detalles de las facturas
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(FacturaViewModel facturaViewModel)
-        {
+            {
             if (ModelState.IsValid)
             {
                 facturaViewModel.detalle.facturaid = facturaViewModel.factura.id;
                 db.FacturaDetallesModels.Add(facturaViewModel.detalle);
+                db.SaveChanges();
             }
             facturaViewModel.articulos = db.ArticulosModels.ToList().Select(i => new SelectListItem() { Value = i.id.ToString(), Text = i.descripcion }).ToList();
 
